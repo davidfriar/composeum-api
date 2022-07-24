@@ -1,0 +1,25 @@
+{
+  "componentType": "simplepage",
+  "itemId":"4564356",
+  "properties": {
+    "foo": 6,
+    "bar": "I love the bar",
+    "baz": "baz is  my best mate"
+  },
+  "slots": {
+    "header":[
+      {
+        "componentType": "header",
+        "itemId": "1234123",
+        "properties": {
+          "mercy": "not strained",
+          "myheart": true,
+          "dwarves": [ "dopey", "grumpy", "doc", "rudolf"]
+        }
+      }
+    ],
+    "main":[],
+    "footer": []
+  }
+
+}

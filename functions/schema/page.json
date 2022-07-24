@@ -1,0 +1,84 @@
+{
+    "$ref": "#/definitions/Page",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Item": {
+            "additionalProperties": false,
+            "properties": {
+                "componentType": {
+                    "type": "string"
+                },
+                "itemId": {
+                    "type": "string"
+                },
+                "properties": {
+                    "$ref": "#/definitions/Properties"
+                },
+                "slots": {
+                    "$ref": "#/definitions/Slots"
+                }
+            },
+            "required": [
+                "componentType",
+                "itemId",
+                "properties"
+            ],
+            "type": "object"
+        },
+        "Page": {
+            "additionalProperties": false,
+            "properties": {
+                "children": {
+                    "items": {
+                        "$ref": "#/definitions/Page"
+                    },
+                    "type": "array"
+                },
+                "content": {
+                    "$ref": "#/definitions/Item"
+                },
+                "path": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "content",
+                "path"
+            ],
+            "type": "object"
+        },
+        "Properties": {
+            "additionalProperties": {
+                "anyOf": [
+                    {
+                        "additionalProperties": true,
+                        "properties": {},
+                        "type": "object"
+                    },
+                    {
+                        "items": {},
+                        "type": "array"
+                    },
+                    {
+                        "type": [
+                            "string",
+                            "number",
+                            "boolean"
+                        ]
+                    }
+                ]
+            },
+            "type": "object"
+        },
+        "Slots": {
+            "additionalProperties": {
+                "items": {
+                    "$ref": "#/definitions/Item"
+                },
+                "type": "array"
+            },
+            "type": "object"
+        }
+    }
+}
+

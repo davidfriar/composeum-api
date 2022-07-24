@@ -1,16 +1,30 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { Stack, StackProps } from "aws-cdk-lib"
+import { Construct } from "constructs"
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs"
+import { Bucket } from "aws-cdk-lib/aws-s3"
+import { Runtime } from "aws-cdk-lib/aws-lambda"
+import { LambdaRestApi } from "aws-cdk-lib/aws-apigateway"
 
 export class ComposeumApiStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
+    super(scope, id, props)
 
-    // The code that defines your stack goes here
+    const bucket = new Bucket(this, "composeum-store")
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'ComposeumApiQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    const handler = new NodejsFunction(this, "content-api-handler", {
+      handler: "main",
+      entry: __dirname + "/../functions/content.ts",
+      runtime: Runtime.NODEJS_16_X,
+      environment: {
+        BUCKET: bucket.bucketName,
+      },
+    })
+
+    bucket.grantReadWrite(handler)
+
+    const api = new LambdaRestApi(this, "composeum-api", {
+      proxy: true,
+      handler: handler,
+    })
   }
 }

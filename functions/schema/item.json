@@ -1,0 +1,62 @@
+{
+    "$ref": "#/definitions/Item",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Item": {
+            "additionalProperties": false,
+            "properties": {
+                "componentType": {
+                    "type": "string"
+                },
+                "itemId": {
+                    "type": "string"
+                },
+                "properties": {
+                    "$ref": "#/definitions/Properties"
+                },
+                "slots": {
+                    "$ref": "#/definitions/Slots"
+                }
+            },
+            "required": [
+                "componentType",
+                "itemId",
+                "properties"
+            ],
+            "type": "object"
+        },
+        "Properties": {
+            "additionalProperties": {
+                "anyOf": [
+                    {
+                        "additionalProperties": true,
+                        "properties": {},
+                        "type": "object"
+                    },
+                    {
+                        "items": {},
+                        "type": "array"
+                    },
+                    {
+                        "type": [
+                            "string",
+                            "number",
+                            "boolean"
+                        ]
+                    }
+                ]
+            },
+            "type": "object"
+        },
+        "Slots": {
+            "additionalProperties": {
+                "items": {
+                    "$ref": "#/definitions/Item"
+                },
+                "type": "array"
+            },
+            "type": "object"
+        }
+    }
+}
+
